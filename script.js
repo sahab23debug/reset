@@ -2,24 +2,37 @@
    LINKED LIST IMPLEMENTATION
 ═══════════════════════════════════════════════════ */
 class Node {
-  constructor(data) { this.data = data; this.next = null; }
+  constructor(data) {
+    this.data = data;
+    this.next = null;
+  }
 }
 
 class LinkedList {
-  constructor() { this.head = null; this._size = 0; }
+  constructor() {
+    this.head = null;
+    this._size = 0;
+  }
 
   get size() { return this._size; }
 
   append(data) {
     const node = new Node(data);
-    if (!this.head) { this.head = node; }
-    else { let c = this.head; while (c.next) c = c.next; c.next = node; }
+    if (!this.head) {
+      this.head = node;
+    } else {
+      let c = this.head;
+      while (c.next) c = c.next;
+      c.next = node;
+    }
     this._size++;
   }
 
   prepend(data) {
     const node = new Node(data);
-    node.next = this.head; this.head = node; this._size++;
+    node.next = this.head;
+    this.head = node;
+    this._size++;
   }
 
   removeById(id) {
@@ -74,10 +87,10 @@ class LinkedList {
 const AVATAR_COLORS = ['#B5D4F4','#9FE1CB','#F5C4B3','#C0DD97','#F4C0D1','#CECBF6','#FAC775','#D3D1C7'];
 const AVATAR_BG     = ['#185FA5','#0F6E56','#993C1D','#3B6D11','#993556','#534AB7','#854F0B','#5F5E5A'];
 
-const DIFF_COLOR = { easy: '#34c77b', medium: '#f5a623', hard: '#e85454' };
-const DIFF_CLASS = { easy: 'badge-easy', medium: 'badge-med', hard: 'badge-hard' };
-const STATUS_CLASS = { active: 'status-active', idle: 'status-idle', offline: 'status-offline' };
-const DOT_CLASS = { active: 'dot-active', idle: 'dot-idle', offline: 'dot-offline' };
+const DIFF_COLOR   = { easy: '#34c77b', medium: '#f5a623', hard: '#e85454' };
+const DIFF_CLASS   = { easy: 'badge-easy', medium: 'badge-med', hard: 'badge-hard' };
+const STATUS_CLASS = { active: 'status-active', offline: 'status-offline' };
+const DOT_CLASS    = { active: 'dot-active', offline: 'dot-offline' };
 
 /* ═══════════════════════════════════════════════════
    STATE — ALL COLLECTIONS ARE LINKED LISTS
@@ -86,6 +99,7 @@ const state = {
   students: new LinkedList(),
   topics:   new LinkedList(),
   activities: new LinkedList(),
+  curriculumTasks: new LinkedList(),
   modalMode: '',
   modalData: {},
   searchQuery: '',
@@ -96,16 +110,16 @@ const state = {
 
 /* Seed data */
 const SEED_STUDENTS = [
-  {id:1,name:'Aanya Singh',  avatar:'AS',color:0,topicsDone:14,score:920,streak:12,status:'active', topics:['Arrays','Linked Lists','Stacks','Trees','BST','Heaps','Sorting','Searching','Graphs','BFS','DFS','DP Basics','Recursion','Hashing'], loginHistory:[]},
-  {id:2,name:'Rahul Mehta',  avatar:'RM',color:1,topicsDone:11,score:845,streak:8, status:'active', topics:['Arrays','Linked Lists','Stacks','Trees','BST','Sorting','Searching','Graphs','BFS','Recursion','Hashing'], loginHistory:[]},
-  {id:3,name:'Priya Patel',  avatar:'PP',color:2,topicsDone:9, score:710,streak:5, status:'idle',   topics:['Arrays','Linked Lists','Stacks','Trees','BST','Sorting','Searching','Recursion','Hashing'], loginHistory:[]},
-  {id:4,name:'Dev Sharma',   avatar:'DS',color:3,topicsDone:16,score:980,streak:21,status:'active', topics:['Arrays','Linked Lists','Stacks','Trees','BST','Heaps','Sorting','Searching','Graphs','BFS','DFS','DP Basics','DP Advanced','Recursion','Hashing','Tries'], loginHistory:[]},
-  {id:5,name:'Kavya Reddy',  avatar:'KR',color:4,topicsDone:7, score:540,streak:2, status:'idle',   topics:['Arrays','Linked Lists','Stacks','Trees','BST','Sorting','Recursion'], loginHistory:[]},
-  {id:6,name:'Arjun Nair',   avatar:'AN',color:5,topicsDone:3, score:210,streak:0, status:'offline',topics:['Arrays','Linked Lists','Stacks'], loginHistory:[]},
-  {id:7,name:'Sneha Iyer',   avatar:'SI',color:6,topicsDone:12,score:870,streak:9, status:'active', topics:['Arrays','Linked Lists','Stacks','Trees','BST','Heaps','Sorting','Searching','Graphs','BFS','Recursion','Hashing'], loginHistory:[]},
-  {id:8,name:'Vikram Das',   avatar:'VD',color:7,topicsDone:2, score:120,streak:0, status:'offline',topics:['Arrays','Linked Lists'], loginHistory:[]},
-  {id:9,name:'Meera Joshi',  avatar:'MJ',color:0,topicsDone:5, score:380,streak:1, status:'idle',   topics:['Arrays','Linked Lists','Stacks','Trees','Sorting'], loginHistory:[]},
-  {id:10,name:'Rohan Gupta', avatar:'RG',color:1,topicsDone:13,score:895,streak:15,status:'active', topics:['Arrays','Linked Lists','Stacks','Trees','BST','Heaps','Sorting','Searching','Graphs','BFS','Recursion','Hashing','DP Basics'], loginHistory:[]},
+  {id:1,name:'Aanya Singh',  avatar:'AS',color:0,score:920,streak:12,status:'active',  topics:['Arrays','Linked Lists','Stacks','Trees','BST','Heaps','Sorting','Searching','Graphs','BFS','DFS','DP Basics','Recursion','Hashing'], loginHistory:[]},
+  {id:2,name:'Rahul Mehta',  avatar:'RM',color:1,score:845,streak:8, status:'active',  topics:['Arrays','Linked Lists','Stacks','Trees','BST','Sorting','Searching','Graphs','BFS','Recursion','Hashing'], loginHistory:[]},
+  {id:3,name:'Priya Patel',  avatar:'PP',color:2,score:710,streak:5, status:'offline', topics:['Arrays','Linked Lists','Stacks','Trees','BST','Sorting','Searching','Recursion','Hashing'], loginHistory:[]},
+  {id:4,name:'Dev Sharma',   avatar:'DS',color:3,score:980,streak:21,status:'active',  topics:['Arrays','Linked Lists','Stacks','Trees','BST','Heaps','Sorting','Searching','Graphs','BFS','DFS','DP Basics','DP Advanced','Recursion','Hashing','Tries'], loginHistory:[]},
+  {id:5,name:'Kavya Reddy',  avatar:'KR',color:4,score:540,streak:2, status:'offline', topics:['Arrays','Linked Lists','Stacks','Trees','BST','Sorting','Recursion'], loginHistory:[]},
+  {id:6,name:'Arjun Nair',   avatar:'AN',color:5,score:210,streak:0, status:'offline',topics:['Arrays','Linked Lists','Stacks'], loginHistory:[]},
+  {id:7,name:'Sneha Iyer',   avatar:'SI',color:6,score:870,streak:9, status:'active',  topics:['Arrays','Linked Lists','Stacks','Trees','BST','Heaps','Sorting','Searching','Graphs','BFS','Recursion','Hashing'], loginHistory:[]},
+  {id:8,name:'Vikram Das',   avatar:'VD',color:7,score:120,streak:0, status:'offline',topics:['Arrays','Linked Lists'], loginHistory:[]},
+  {id:9,name:'Meera Joshi',  avatar:'MJ',color:0,score:380,streak:1, status:'offline', topics:['Arrays','Linked Lists','Stacks','Trees','Sorting'], loginHistory:[]},
+  {id:10,name:'Rohan Gupta', avatar:'RG',color:1,score:895,streak:15,status:'active',  topics:['Arrays','Linked Lists','Stacks','Trees','BST','Heaps','Sorting','Searching','Graphs','BFS','Recursion','Hashing','DP Basics'], loginHistory:[]},
 ];
 
 const SEED_TOPICS = [
@@ -127,6 +141,12 @@ const SEED_TOPICS = [
   {id:16,name:'Tries',       cat:'Data Struct',  diff:'hard',   problems:10},
 ];
 
+const SEED_TASKS = [
+  {id:1, topic:'Arrays', description:'Reverse an array in-place'},
+  {id:2, topic:'Arrays', description:'Find the maximum subarray sum (Kadane)'},
+  {id:3, topic:'Linked Lists', description:'Detect a cycle in a linked list'}
+];
+
 /* ═══════════════════════════════════════════════════
    AUTH
 ═══════════════════════════════════════════════════ */
@@ -137,6 +157,8 @@ const STORAGE = {
   users: 'dsaUsers',
   students: 'dsaStudents',
   topics: 'dsaTopics',
+  curriculumTasks: 'dsaCurriculumTasks',
+  activities: 'dsaActivities', // Added for persistent activity log
 };
 let isLoginMode = true;
 let loginRole = 'admin';
@@ -423,6 +445,7 @@ function handleLogin() {
         if (!student.loginHistory) student.loginHistory = [];
         student.loginHistory.push(Date.now());
         updateStudentStreak(student);
+        student.status = 'active';
         saveData();
       }
     }
@@ -462,11 +485,10 @@ function handleSignUp() {
     name,
     avatar: initials,
     color: Math.floor(Math.random() * AVATAR_COLORS.length),
-    topicsDone: 0,
-    score: 0,
     streak: 0,
     status: 'active',
     topics: [],
+    completedTaskIds: [],
     loginHistory: []
   });
 
@@ -483,6 +505,11 @@ function handleSignUp() {
 }
 
 function handleLogout() {
+  const student = getLoggedInStudent();
+  if (student) {
+    student.status = 'offline';
+    saveData();
+  }
   localStorage.removeItem(STORAGE.auth);
   localStorage.removeItem(STORAGE.role);
   localStorage.removeItem(STORAGE.username);
@@ -510,15 +537,18 @@ function loadUsers() {
 function saveData() {
   localStorage.setItem(STORAGE.students, JSON.stringify(state.students.toArray()));
   localStorage.setItem(STORAGE.topics, JSON.stringify(state.topics.toArray()));
+  localStorage.setItem(STORAGE.curriculumTasks, JSON.stringify(state.curriculumTasks.toArray()));
+  localStorage.setItem(STORAGE.activities, JSON.stringify(state.activities.toArray())); // Save activities
 }
 
 function loadData() {
   const storedStudents = localStorage.getItem(STORAGE.students);
   const storedTopics = localStorage.getItem(STORAGE.topics);
+  const storedCurriculumTasks = localStorage.getItem(STORAGE.curriculumTasks);
 
   state.students = new LinkedList();
   state.topics = new LinkedList();
-  state.activities = new LinkedList();
+  state.curriculumTasks = new LinkedList();
 
   if (storedStudents) {
     JSON.parse(storedStudents).forEach(s => state.students.append(s));
@@ -530,6 +560,22 @@ function loadData() {
     JSON.parse(storedTopics).forEach(t => state.topics.append(t));
   } else {
     SEED_TOPICS.forEach(t => state.topics.append(t));
+  }
+
+  if (storedCurriculumTasks) {
+    JSON.parse(storedCurriculumTasks).forEach(tk => state.curriculumTasks.append(tk));
+  } else {
+    SEED_TASKS.forEach(tk => state.curriculumTasks.append(tk));
+  }
+
+  // Load activities or generate if none exist
+  const storedActivities = localStorage.getItem(STORAGE.activities);
+  state.activities = new LinkedList(); // Initialize activities LinkedList
+  if (storedActivities) {
+    JSON.parse(storedActivities).forEach(a => state.activities.append(a));
+  } else {
+    generateActivities(); // Generate initial activities if none are stored
+    saveData(); // Save the newly generated activities
   }
 }
 
@@ -543,7 +589,6 @@ function showApp() {
   document.getElementById('login-screen').style.display = 'none';
   loadData();
   syncAllStudentStreaks();  // Sync streaks with login history
-  generateActivities();
 
   if (currentRole === 'student') {
     showStudentApp();
@@ -577,17 +622,30 @@ function renderStudentDashboard() {
   const student = getLoggedInStudent();
   if (!student) return;
   document.getElementById('student-welcome').textContent = `Welcome back, ${student.name}`;
+  
+  const { count, total, pct, validTopics, score } = getStudentProgress(student);
+  
+  const studentActivities = state.activities.toArray().filter(a => a.student === student.name).slice(0, 8);
+  const activityHtml = studentActivities.length
+    ? studentActivities.map(a => {
+        const displayTime = formatActivityTime(a.time, a.isTimestamp);
+        return `<div class="activity-item">
+          ${avatarEl(a, 28)}
+          <div class="activity-info"><strong>${a.type}</strong> <span style="color:var(--text2);">on</span> <strong>${a.topic}</strong></div>
+          <span class="activity-time">${displayTime}</span>
+        </div>`;
+      }).join('')
+    : '<p style="color:var(--text3);font-size:13px;">No recent activity yet.</p>';
 
-  const completion = Math.round(student.topicsDone / state.topics.size * 100) || 0;
-  document.getElementById('student-metrics').innerHTML = `
+    document.getElementById('student-metrics').innerHTML = `
     <div class="metric-card">
       <div class="metric-label">Topics Done</div>
-      <div class="metric-value metric-accent">${student.topicsDone}</div>
-      <div class="metric-sub">of ${state.topics.size}</div>
+      <div class="metric-value metric-accent">${count}</div>
+      <div class="metric-sub">of ${total}</div>
     </div>
     <div class="metric-card">
       <div class="metric-label">Score</div>
-      <div class="metric-value metric-green">${student.score}</div>
+      <div class="metric-value metric-green">${score}</div>
       <div class="metric-sub">Current rating</div>
     </div>
     <div class="metric-card">
@@ -597,24 +655,13 @@ function renderStudentDashboard() {
     </div>
     <div class="metric-card">
       <div class="metric-label">Completion</div>
-      <div class="metric-value metric-accent">${completion}%</div>
+      <div class="metric-value metric-accent">${pct}%</div>
       <div class="metric-sub">Curriculum progress</div>
     </div>
   `;
+  document.getElementById('student-activity').innerHTML = activityHtml;
 
-  const studentActivities = state.activities.toArray().filter(a => a.student === student.name).slice(0, 8);
-  document.getElementById('student-activity').innerHTML = studentActivities.length
-    ? studentActivities.map(a => {
-        const timeLabel = a.time < 60 ? `${a.time}m ago` : `${Math.round(a.time / 60)}h ago`;
-        return `<div class="activity-item">
-          ${avatarEl(a, 28)}
-          <div class="activity-info"><strong>${a.type}</strong> <span style="color:var(--text2);">on</span> <strong>${a.topic}</strong></div>
-          <span class="activity-time">${timeLabel}</span>
-        </div>`;
-      }).join('')
-    : '<p style="color:var(--text3);font-size:13px;">No recent activity yet.</p>';
-
-  const topics = student.topics.slice(0, 8).map(topic => `
+  const topics = validTopics.slice(0, 8).map(topic => `
     <div class="topic-row">
       <span class="topic-name">${topic}</span>
       <span class="topic-cat">Completed</span>
@@ -634,16 +681,24 @@ function renderStudentCourses() {
   const coursesHtml = state.topics.toArray().map(topic => {
     const isCompleted = student.topics.includes(topic.name);
     const isStarted = student.startedTopics && student.startedTopics.includes(topic.name);
-    const buttonText = isCompleted ? 'Completed' : isStarted ? 'Continue' : 'Start';
-    const buttonClass = isCompleted ? 'btn-success' : 'btn-primary';
-    const buttonAction = isCompleted ? '' : `onclick="startTopic('${topic.name}')`;
+    
+    let btnHtml = '';
+    if (isCompleted) {
+      btnHtml = `<button class="btn-success" disabled>Completed</button>`;
+    } else if (isStarted) {
+      // If started, show a button to complete the course
+      btnHtml = `<button class="btn-primary" onclick="completeTopic('${topic.name}')" style="background:var(--orange)">Complete</button>`;
+    } else {
+      btnHtml = `<button class="btn-primary" onclick="startTopic('${topic.name}')">Start</button>`;
+    }
+
     return `
       <div class="course-item">
         <div class="course-info">
           <span class="course-name">${topic.name}</span>
           <span class="course-cat">${topic.cat} • ${topic.diff}</span>
         </div>
-        <button class="${buttonClass}" ${buttonAction} ${isCompleted ? 'disabled' : ''}>${buttonText}</button>
+        ${btnHtml}
       </div>`;
   }).join('');
   document.getElementById('student-courses').innerHTML = coursesHtml;
@@ -652,78 +707,99 @@ function renderStudentCourses() {
 function renderStudentTasks() {
   const student = getLoggedInStudent();
   if (!student) return;
-  if (!student.tasks) generateStudentTasks(student);
-  const tasksHtml = student.tasks.map(task => {
-    const isCompleted = task.completed;
-    const checkbox = `<input type="checkbox" ${isCompleted ? 'checked' : ''} onchange="toggleTask(${task.id})">`;
+  
+  const tasksHtml = state.curriculumTasks.toArray().map(task => {
+    const isCompleted = (student.completedTaskIds || []).includes(task.id);
+    const btnHtml = isCompleted 
+      ? `<button class="btn-success" disabled>Done ✓</button>`
+      : `<button class="btn-primary" onclick="completeTask(${task.id})">Complete</button>`;
+
     return `
       <div class="task-item ${isCompleted ? 'completed' : ''}">
-        ${checkbox}
-        <span class="task-desc">${task.description}</span>
-        <span class="task-topic">${task.topic}</span>
+        <div class="task-main">
+          <span class="task-desc">${task.description}</span>
+          <span class="task-topic">${task.topic}</span>
+        </div>
+        ${btnHtml}
       </div>`;
   }).join('');
-  document.getElementById('student-tasks').innerHTML = tasksHtml;
-}
-
-function generateStudentTasks(student) {
-  const tasks = [];
-  let taskId = 1;
-  state.topics.forEach(topic => {
-    tasks.push({
-      id: taskId++,
-      topic: topic.name,
-      description: `Solve 5 problems in ${topic.name}`,
-      completed: false
-    });
-    tasks.push({
-      id: taskId++,
-      topic: topic.name,
-      description: `Watch tutorial video for ${topic.name}`,
-      completed: false
-    });
-    tasks.push({
-      id: taskId++,
-      topic: topic.name,
-      description: `Complete practice quiz for ${topic.name}`,
-      completed: false
-    });
-  });
-  student.tasks = tasks;
-  saveData();
-  return tasks;
+  document.getElementById('student-tasks').innerHTML = tasksHtml || '<p style="color:var(--text3);padding:20px;">No tasks assigned yet.</p>';
 }
 
 function startTopic(topicName) {
   const student = getLoggedInStudent();
   if (!student) return;
   if (!student.startedTopics) student.startedTopics = [];
-  if (!student.startedTopics.includes(topicName)) {
+  if (!student.startedTopics.includes(topicName) && !student.topics.includes(topicName)) {
     student.startedTopics.push(topicName);
+    
+    // Log activity
+    state.activities.prepend({
+      student: student.name,
+      avatar:  student.avatar,
+      color:   student.color,
+      type:    'started',
+      topic:   topicName,
+      time:    Date.now(),
+      isTimestamp: true,
+    });
+
     saveData();
     renderStudentCourses();
+    renderStudentDashboard();
   }
-  // For now, just mark as started. Could open a modal or something.
 }
 
-function toggleTask(taskId) {
+function completeTopic(topicName) {
   const student = getLoggedInStudent();
-  if (!student || !student.tasks) return;
-  const task = student.tasks.find(t => t.id === taskId);
-  if (task) {
-    task.completed = !task.completed;
-    if (task.completed) {
-      // Award points or update progress
-      student.score += 10; // Example: 10 points per task
-      // Check if all tasks for topic are done
-      const topicTasks = student.tasks.filter(t => t.topic === task.topic);
-      if (topicTasks.every(t => t.completed) && !student.topics.includes(task.topic)) {
-        student.topics.push(task.topic);
-        student.topicsDone += 1;
-        student.score += 50; // Bonus for completing topic
-      }
-    }
+  if (!student) return;
+  
+  // Move from started to completed
+  if (student.startedTopics) {
+    student.startedTopics = student.startedTopics.filter(t => t !== topicName);
+  }
+  
+  if (!student.topics.includes(topicName)) {
+    student.topics.push(topicName);
+    
+    // Log activity
+    state.activities.prepend({
+      student: student.name,
+      avatar:  student.avatar,
+      color:   student.color,
+      type:    'completed',
+      topic:   topicName,
+      time:    Date.now(),
+      isTimestamp: true,
+    });
+  }
+  
+  saveData();
+  renderStudentCourses();
+  renderStudentDashboard();
+}
+
+function completeTask(taskId) {
+  const student = getLoggedInStudent();
+  if (!student) return;
+  if (!student.completedTaskIds) student.completedTaskIds = [];
+  
+  if (!student.completedTaskIds.includes(taskId)) {
+    const task = state.curriculumTasks.findById(taskId);
+    student.completedTaskIds.push(taskId);
+    
+    state.activities.prepend({
+      student: student.name,
+      avatar:  student.avatar,
+      color:   student.color,
+      type:    'completed',
+      topic:   task ? task.description : 'Task',
+      time:    Date.now(),
+      isTimestamp: true,
+    });
+
     saveData();
+    renderStudentTasks();
     renderStudentDashboard(); // Re-render to update metrics
   }
 }
@@ -808,11 +884,46 @@ function topicCompletion(topicName) {
   return Math.round((count / total) * 100);
 }
 
+function getStudentProgress(student) {
+  const total = state.topics.size;
+  const validTopics = (student.topics || []).filter(topicName => 
+    state.topics.some(t => t.name === topicName)
+  );
+  const count = validTopics.length;
+  const pct = total > 0 ? Math.min(100, Math.round((count / total) * 100)) : 0;
+
+  // Calculate score derived from valid curriculum
+  let score = validTopics.length * 50; // 50 pts per completed topic
+  
+  (student.completedTaskIds || []).forEach(taskId => {
+    const task = state.curriculumTasks.findById(taskId);
+    if (task && state.topics.some(t => t.name === task.topic)) {
+      score += 10;
+    }
+  });
+
+  return { count, total, pct, validTopics, score };
+}
+
 function avatarEl(s, size = 32) {
   const fs = size <= 28 ? 10 : 12;
   return `<div class="avatar" style="width:${size}px;height:${size}px;font-size:${fs}px;background:${AVATAR_COLORS[s.color]};color:${AVATAR_BG[s.color]};">${s.avatar}</div>`;
 }
 
+function formatActivityTime(timeValue, isTimestamp) {
+  let minutesAgo;
+  if (isTimestamp) {
+    minutesAgo = Math.round((Date.now() - timeValue) / (1000 * 60));
+  } else {
+    minutesAgo = timeValue; // Already in minutes
+  }
+
+  if (minutesAgo < 60) {
+    return `${minutesAgo}m ago`;
+  } else {
+    return `${Math.round(minutesAgo / 60)}h ago`;
+  }
+}
 /* ═══════════════════════════════════════════════════
    GENERATE ACTIVITIES (stored in linked list)
 ═══════════════════════════════════════════════════ */
@@ -828,6 +939,7 @@ function generateActivities() {
         color:   s.color,
         type:    types[Math.floor(Math.random() * types.length)],
         topic:   topicsArr[Math.floor(Math.random() * topicsArr.length)].name,
+        isTimestamp: false,
         time:    Math.floor(Math.random() * 1440),
       });
     }
@@ -903,11 +1015,16 @@ function renderDashboard() {
   document.getElementById('m-students').textContent = students.size;
   document.getElementById('m-topics').textContent   = state.topics.size;
 
-  const totalComp = students.reduce((acc, s) => acc + (s.topicsDone / state.topics.size * 100), 0);
+  const totalComp = students.reduce((acc, s) => {
+    return acc + getStudentProgress(s).pct;
+  }, 0);
   const avgComp = students.size ? Math.round(totalComp / students.size) : 0;
   document.getElementById('m-completion').textContent = avgComp + '%';
 
-  const atRisk = students.filter(s => s.streak === 0);
+  const atRisk = students.filter(s => {
+    const p = getStudentProgress(s);
+    return s.streak === 0 || p.count < 4;
+  });
   document.getElementById('m-risk').textContent = atRisk.size;
 
   // Topic coverage list
@@ -927,13 +1044,17 @@ function renderDashboard() {
   }).join('');
 
   // Leaderboard — top 6 by score using sorted linked list traversal
-  const top6 = students.sortedArray((a, b) => b.score - a.score).slice(0, 6);
+  const top6 = students.toArray()
+    .map(s => ({ ...s, derivedScore: getStudentProgress(s).score }))
+    .sort((a, b) => b.derivedScore - a.derivedScore)
+    .slice(0, 6);
+
   document.getElementById('student-list').innerHTML = top6.map(s =>
     `<div class="student-row" onclick="viewStudent(${s.id})">
       ${avatarEl(s)}
       <span class="student-name">${s.name}</span>
       <div style="display:flex;gap:8px;align-items:center;font-size:12px;">
-        <span class="student-score">${s.score}</span>
+        <span class="student-score">${s.derivedScore}</span>
         <span style="color:var(--orange);">${s.streak}🔥</span>
       </div>
       <div class="status-dot ${DOT_CLASS[s.status]}"></div>
@@ -951,17 +1072,17 @@ function renderStudents() {
     : state.students.toArray();
 
   document.getElementById('students-tbody').innerHTML = filtered.map(s => {
-    const pct  = Math.round(s.topicsDone / state.topics.size * 100);
+    const { count, total, pct, score } = getStudentProgress(s);
     const bars = Array.from({ length: 10 }, (_, i) => {
-      const filled = i < Math.round(s.topicsDone / state.topics.size * 10);
+      const filled = i < Math.round(pct / 10);
       return `<div class="mini-block" style="background:${filled ? 'var(--accent)' : 'var(--bg4)'}"></div>`;
     }).join('');
     return `<tr>
       <td><div style="display:flex;align-items:center;gap:10px;">${avatarEl(s)}<span>${s.name}</span></div></td>
-      <td style="font-family:var(--mono);">${s.topicsDone} / ${state.topics.size}</td>
-      <td style="font-family:var(--mono);font-weight:600;color:var(--accent);">${s.score}</td>
+      <td style="font-family:var(--mono);">${count} / ${total}</td>
+      <td style="font-family:var(--mono);font-weight:600;color:var(--accent);">${score}</td>
       <td>${s.streak} 🔥</td>
-      <td><span class="status-badge ${STATUS_CLASS[s.status]}">${s.status}</span></td>
+      <td><span class="status-badge ${STATUS_CLASS[s.status]}">${s.status === 'active' ? 'Online' : 'Offline'}</span></td>
       <td><div style="display:flex;align-items:center;gap:8px;"><div class="mini-bar">${bars}</div><span style="font-size:11px;font-family:var(--mono);">${pct}%</span></div></td>
       <td>
         <button class="btn-sm" onclick="editStudent(${s.id})">Edit</button>
@@ -971,14 +1092,31 @@ function renderStudents() {
   }).join('');
 }
 
+function renderAdminTasks() {
+  document.getElementById('admin-tasks-tbody').innerHTML = state.curriculumTasks.toArray().map(tk => `
+    <tr>
+      <td style="font-weight:600;">${tk.description}</td>
+      <td style="color:var(--text2);">${tk.topic}</td>
+      <td>
+        <button class="btn-sm danger" onclick="deleteCurriculumTask(${tk.id})">Remove</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
 /* ═══════════════════════════════════════════════════
    TOPICS TABLE
 ═══════════════════════════════════════════════════ */
 function renderTopics() {
   document.getElementById('topics-tbody').innerHTML = state.topics.toArray().map(t => {
     const pct = topicCompletion(t.name);
-    let count = 0;
-    state.students.forEach(s => { if (s.topics.includes(t.name)) count++; });
+    let doneCount = 0;
+    let startedCount = 0;
+    // Calculate counts for both started and completed statuses
+    state.students.forEach(s => { 
+      if (s.topics.includes(t.name)) doneCount++; 
+      else if (s.startedTopics && s.startedTopics.includes(t.name)) startedCount++;
+    });
     return `<tr>
       <td style="font-weight:600;">${t.name}</td>
       <td style="color:var(--text2);">${t.cat}</td>
@@ -990,7 +1128,15 @@ function renderTopics() {
           <span style="font-size:12px;font-family:var(--mono);">${pct}%</span>
         </div>
       </td>
-      <td style="font-family:var(--mono);">${count}</td>
+      <td>
+        <div style="font-size:11px; line-height:1.4;">
+          <div style="color:var(--green)">Done: ${doneCount}</div>
+          <div style="color:var(--orange)">Started: ${startedCount}</div>
+        </div>
+      </td>
+      <td>
+        <button class="btn-sm danger" onclick="deleteTopic(${t.id})">Remove</button>
+      </td>
     </tr>`;
   }).join('');
 }
@@ -1002,12 +1148,12 @@ function renderActivity() {
   const TYPE_COLOR = { solved:'var(--accent)', completed:'var(--green)', started:'var(--orange)' };
   const filter = state.activityFilter;
 
-  const items = filter === 'all'
+  const items = (filter === 'all'
     ? state.activities.toArray()
-    : state.activities.filter(a => a.type === filter).toArray();
+    : state.activities.filter(a => a.type === filter).toArray()).slice(0, 30);
 
-  document.getElementById('activity-log').innerHTML = items.slice(0, 30).map(a => {
-    const t = a.time < 60 ? `${a.time}m` : `${Math.round(a.time/60)}h`;
+  document.getElementById('activity-log').innerHTML = items.map(a => {
+    const displayTime = formatActivityTime(a.time, a.isTimestamp);
     return `<div class="activity-item">
       ${avatarEl(a)}
       <div class="activity-info">
@@ -1016,7 +1162,7 @@ function renderActivity() {
         <strong>${a.topic}</strong>
       </div>
       <span class="activity-type" style="background:${TYPE_COLOR[a.type]}18;color:${TYPE_COLOR[a.type]};">${a.type}</span>
-      <span class="activity-time">${t} ago</span>
+      <span class="activity-time">${displayTime}</span>
     </div>`;
   }).join('');
 }
@@ -1025,15 +1171,15 @@ function renderActivity() {
    ALERTS
 ═══════════════════════════════════════════════════ */
 function renderAlerts() {
-  const atRisk = state.students.filter(s => s.streak === 0 || s.topicsDone < 4).toArray();
-  const topPerf = state.students.filter(s => s.score > 850).toArray();
+  const atRisk = state.students.filter(s => { const p = getStudentProgress(s); return s.streak === 0 || p.count < 4; }).toArray();
+  const topPerf = state.students.filter(s => getStudentProgress(s).score > 850).toArray();
 
   document.getElementById('alerts-risk').innerHTML = atRisk.length
     ? atRisk.map(s => `<div class="alert-row">
         ${avatarEl(s, 30)}
         <div>
           <div class="alert-title">${s.name}</div>
-          <div class="alert-sub">${s.streak === 0 ? 'No activity streak. ' : ''}${s.topicsDone < 4 ? `Only ${s.topicsDone} topics completed.` : ''}</div>
+          <div class="alert-sub">${s.streak === 0 ? 'No activity streak. ' : ''}${getStudentProgress(s).count < 4 ? `Only ${getStudentProgress(s).count} topics completed.` : ''}</div>
         </div>
       </div>`).join('')
     : '<p style="color:var(--text3);font-size:13px;">No at-risk students 🎉</p>';
@@ -1043,7 +1189,7 @@ function renderAlerts() {
         ${avatarEl(s, 30)}
         <div>
           <div class="alert-title">${s.name}</div>
-          <div class="alert-sub">Score: ${s.score} · ${s.topicsDone} topics · ${s.streak}d streak</div>
+          <div class="alert-sub">Score: ${getStudentProgress(s).score} · ${getStudentProgress(s).count} topics · ${s.streak}d streak</div>
         </div>
       </div>`).join('')
     : '<p style="color:var(--text3);font-size:13px;">No top performers yet.</p>';
@@ -1086,6 +1232,10 @@ function navigate(page, el) {
     addBtn.textContent = '+ Add Topic'; addBtn.onclick = openAddTopicModal;
     searchWrap.style.display = 'none';
     renderTopics();
+  } else if (page === 'admin-tasks') {
+    addBtn.textContent = '+ Add Task'; addBtn.onclick = openAddTaskModal;
+    searchWrap.style.display = 'none';
+    renderAdminTasks();
   } else if (page === 'passwords') {
     addBtn.textContent = ''; addBtn.onclick = null;
     searchWrap.style.display = 'none';
@@ -1144,11 +1294,11 @@ function renderStudentFullActivity() {
   const studentActivities = state.activities.toArray().filter(a => a.student === student.name);
   document.getElementById('student-full-activity').innerHTML = studentActivities.length
     ? studentActivities.map(a => {
-        const timeLabel = a.time < 60 ? `${a.time}m ago` : `${Math.round(a.time / 60)}h ago`;
+        const displayTime = formatActivityTime(a.time, a.isTimestamp);
         return `<div class="activity-item">
           ${avatarEl(a, 28)}
           <div class="activity-info"><strong>${a.type}</strong> <span style="color:var(--text2);">on</span> <strong>${a.topic}</strong></div>
-          <span class="activity-time">${timeLabel}</span>
+          <span class="activity-time">${displayTime}</span>
         </div>`;
       }).join('')
     : '<p style="color:var(--text3);font-size:13px;">No activity yet.</p>';
@@ -1163,9 +1313,10 @@ function openAddModal() {
   document.getElementById('modal-body').innerHTML = `
     <div class="form-row"><label class="form-label">Full Name</label><input class="form-input" id="f-name" placeholder="e.g. Ananya Kumar"></div>
     <div class="form-row"><label class="form-label">Student Password</label><input class="form-input" id="f-password" type="password" placeholder="Set login password"></div>
-    <div class="form-row"><label class="form-label">Status</label>
+    <div class="form-row"><label class="form-label">Status</label> 
       <select class="form-input" id="f-status">
-        <option>active</option><option>idle</option><option>offline</option>
+        <option value="active">Online</option>
+        <option value="offline">Offline</option>
       </select>
     </div>`;
   document.getElementById('modal').style.display = 'flex';
@@ -1188,6 +1339,22 @@ function openAddTopicModal() {
   document.getElementById('f-tname').focus();
 }
 
+function openAddTaskModal() {
+  state.modalMode = 'add-task';
+  const topicOptions = state.topics.toArray().map(t => `<option>${t.name}</option>`).join('');
+  document.getElementById('modal-title').textContent = 'Add Global Task';
+  document.getElementById('modal-body').innerHTML = `
+    <div class="form-row"><label class="form-label">Task Description</label><input class="form-input" id="f-tkdesc" placeholder="e.g. Implement a Binary Search"></div>
+    <div class="form-row"><label class="form-label">Related Topic</label>
+      <select class="form-input" id="f-tktopic">
+        ${topicOptions}
+      </select>
+    </div>
+  `;
+  document.getElementById('modal').style.display = 'flex';
+  document.getElementById('f-tkdesc').focus();
+}
+
 function editStudent(id) {
   const s = state.students.findById(id);
   if (!s) return;
@@ -1197,16 +1364,62 @@ function editStudent(id) {
   document.getElementById('modal-body').innerHTML = `
     <div class="form-row"><label class="form-label">Full Name</label><input class="form-input" id="f-name" value="${s.name}"></div>
     <div class="form-row"><label class="form-label">Password (leave blank to keep current)</label><input class="form-input" id="f-password" type="password" placeholder="Enter new password or leave blank"></div>
-    <div class="form-row"><label class="form-label">Score</label><input class="form-input" id="f-score" type="number" value="${s.score}" min="0"></div>
+    <div class="form-row"><label class="form-label">Score (Auto-calculated)</label><input class="form-input" id="f-score" type="number" value="${getStudentProgress(s).score}" disabled style="opacity:0.6"></div>
     <div class="form-row"><label class="form-label">Streak (days)</label><input class="form-input" id="f-streak" type="number" value="${s.streak}" min="0"></div>
     <div class="form-row"><label class="form-label">Status</label>
       <select class="form-input" id="f-status">
-        <option ${s.status==='active'?'selected':''}>active</option>
-        <option ${s.status==='idle'?'selected':''}>idle</option>
-        <option ${s.status==='offline'?'selected':''}>offline</option>
+        <option value="active" ${s.status==='active'?'selected':''}>Online</option> 
+        <option value="offline" ${s.status==='offline'?'selected':''}>Offline</option>
       </select>
     </div>`;
   document.getElementById('modal').style.display = 'flex';
+}
+
+function deleteTopic(id) {
+  if (!confirm('Are you sure you want to remove this topic? It will be removed from all student dashboards.')) return;
+  
+  const topicToRemove = state.topics.findById(id);
+  if (!topicToRemove) return;
+  const topicName = topicToRemove.name;
+
+  // Remove tasks associated with this topic globally
+  const tasksToRemove = state.curriculumTasks.toArray().filter(tk => tk.topic === topicName);
+  tasksToRemove.forEach(tk => state.curriculumTasks.removeById(tk.id));
+
+  state.students.forEach(student => {
+    // Remove the topic from the student's completed topics
+    student.topics = student.topics.filter(t => t !== topicName);
+
+    // Remove the topic from the student's started topics
+    if (student.startedTopics) {
+      student.startedTopics = student.startedTopics.filter(t => t !== topicName);
+    }
+
+    // Filter completed tasks to remove IDs that are no longer in the curriculum
+    student.completedTaskIds = (student.completedTaskIds || []).filter(id => 
+      state.curriculumTasks.findById(id)
+    );
+  });
+  state.topics.removeById(id);
+  saveData();
+  renderTopics();
+  renderDashboard();
+  renderStudents(); // Re-render students to update their progress bars
+  renderAlerts(); // Alerts might change if topic count changes
+}
+
+function deleteCurriculumTask(id) {
+  if (!confirm('Remove this task from the curriculum?')) return;
+  state.curriculumTasks.removeById(id);
+  
+  // Clean up student completion lists
+  state.students.forEach(s => {
+    s.completedTaskIds = (s.completedTaskIds || []).filter(tid => tid !== id);
+  });
+
+  saveData();
+  renderAdminTasks();
+  renderDashboard();
 }
 
 function deleteStudent(id) {
@@ -1255,11 +1468,10 @@ function saveModal() {
       password,
       avatar: initials,
       color: Math.floor(Math.random() * AVATAR_COLORS.length),
-      topicsDone: 0,
-      score: 0,
       streak: 0,
       status: document.getElementById('f-status').value,
       topics: [],
+      completedTaskIds: [],
       loginHistory: []
     });
     user.addUser(username, password, 'student', studentId);
@@ -1269,15 +1481,10 @@ function saveModal() {
     if (!s) return;
     const name = document.getElementById('f-name').value.trim();
     const password = document.getElementById('f-password').value.trim();
-    const score = parseInt(document.getElementById('f-score').value) || 0;
     const streak = parseInt(document.getElementById('f-streak').value) || 0;
     
     if (!name) {
       alert('Student name is required.');
-      return;
-    }
-    if (score < 0) {
-      alert('Score cannot be negative.');
       return;
     }
     if (streak < 0) {
@@ -1297,7 +1504,6 @@ function saveModal() {
       if (userEntry) userEntry.password = password;
       saveUsers();
     }
-    s.score  = score;
     s.streak = streak;
     s.status = document.getElementById('f-status').value;
   } else if (state.modalMode === 'add-topic') {
@@ -1328,6 +1534,19 @@ function saveModal() {
       problems: problems,
     });
     renderTopics();
+  } else if (state.modalMode === 'add-task') {
+    const desc = document.getElementById('f-tkdesc').value.trim();
+    const topic = document.getElementById('f-tktopic').value;
+    if (!desc) {
+      alert('Task description is required.');
+      return;
+    }
+    state.curriculumTasks.append({
+      id: Date.now(),
+      description: desc,
+      topic: topic
+    });
+    renderAdminTasks();
   }
   saveData();
   closeModal();
